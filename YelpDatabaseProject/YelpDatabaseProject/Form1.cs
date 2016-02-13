@@ -45,9 +45,10 @@ namespace YelpDatabaseProject
             cityColumn.Add("city");
 
             string selected_state = state_dropDown.SelectedItem.ToString(); //the selected state
-            string qStr = "SELECT city FROM CensusData WHERE state= '"+ selected_state + "' ORDER BY city;";
+            string qStr = "SELECT distinct city FROM CensusData WHERE state= '"+ selected_state + "' ORDER BY city;";
             List<List<string>> qResult = mydb.SQLSELECTExec(qStr, cityColumn);
 
+            city_listbox.Items.Clear();//delete old items in the listbox
             //copy query results to the listbox
             for (int i = 0; i < qResult[0].Count(); i++)
             {
@@ -66,6 +67,7 @@ namespace YelpDatabaseProject
             string qStr = "SELECT zipcode FROM CensusData WHERE city= '" + selected_city + "' ORDER BY zipcode;";
             List<List<string>> qResult = mydb.SQLSELECTExec(qStr, cityColumn);
 
+            zipcode_listbox.Items.Clear(); //delete old items
             //copy query results to the listbox
             for (int i = 0; i < qResult[0].Count(); i++)
             {
@@ -73,5 +75,64 @@ namespace YelpDatabaseProject
             }
         }
 
-    }
-}
+        //display collection of results when a zipcode is selected
+        private void zipcode_listbox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //add following items to the columns to look for
+            List<string> statsColumns = new List<string>();
+            statsColumns.Add("population"); //   0   //indexes of list
+            statsColumns.Add("avg_income"); //   1
+            statsColumns.Add("under18years"); // 2
+            statsColumns.Add("18_to_24years");// 3
+            statsColumns.Add("25_to_44years");// 4
+            statsColumns.Add("45_to_64years");// 5
+            statsColumns.Add("65_and_over");//   6
+            statsColumns.Add("median_age"); //   7
+
+            string selected_zip = zipcode_listbox.SelectedItem.ToString(); //the selected state
+            string qStr = @"SELECT population,avg_income,under18years,18_to_24years,25_to_44years,
+            45_to_64years,65_and_over,median_age FROM CensusData WHERE zipcode= 
+            '"+ selected_zip + "';";
+
+            List<List<string>> qResult = mydb.SQLSELECTExec(qStr, statsColumns);
+
+            //delete old items in listboxes
+            population_listbox.Items.Clear();
+            avg_income_listbox.Items.Clear();
+            median_age_listbox.Items.Clear();
+
+            //copy query results to the listbox
+            for (int j = 0; j < qResult.Count(); j++)
+            {
+                for (int i = 0; i < qResult[j].Count(); i++)
+                {
+                    switch (j)
+                    {
+                        case 0: //population
+                            population_listbox.Items.Add(qResult[j][i]);
+                            break;
+                        case 1: //avg_income
+                            avg_income_listbox.Items.Add(qResult[j][i]);
+                            break;
+                        case 2: //under 18 years
+                            break;
+                        case 3: //18 to 24
+                            break;
+                        case 4: //25 to 44
+                            break;
+                        case 5: //45 to 64
+                            break;
+                        case 6: //65 and over
+                            break;
+                        case 7: //median age
+                            median_age_listbox.Items.Add(qResult[j][i]);
+                            break;
+                    }//switch
+
+                }//for2
+            }//for1
+
+        }//eo zipcode select
+
+    }//eo form1
+}//eo namespace
