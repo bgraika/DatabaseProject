@@ -115,14 +115,19 @@ namespace YelpDatabaseProject
                             avg_income_listbox.Items.Add(qResult[j][i]);
                             break;
                         case 2: //under 18 years
+                            listBoxU18.Items.Add(qResult[j][i]);
                             break;
                         case 3: //18 to 24
+                            listBox18.Items.Add(qResult[j][i]);
                             break;
                         case 4: //25 to 44
+                            listBox25.Items.Add(qResult[j][i]);
                             break;
                         case 5: //45 to 64
+                            listBox45.Items.Add(qResult[j][i]);
                             break;
                         case 6: //65 and over
+                            listBox65.Items.Add(qResult[j][i]);
                             break;
                         case 7: //median age
                             median_age_listbox.Items.Add(qResult[j][i]);
