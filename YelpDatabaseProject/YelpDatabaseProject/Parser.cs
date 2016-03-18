@@ -16,7 +16,7 @@ namespace JSONParser
 
         public JSON()
         {
-
+            exceptions = new string[] { };
         }
 
         public JSON(string[] exceptions)
