@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace YelpDatabaseProject
 {
     class MySQL_connection
     {
-        private MySqlConnection connect;
+        public MySqlConnection connect;
 
         public MySQL_connection()
         {
@@ -38,7 +41,7 @@ namespace YelpDatabaseProject
             connect = new MySqlConnection(connectionString);
         }
 
-        private bool OpenConnection()
+        public bool OpenConnection()
         {
             try
             {
@@ -75,7 +78,7 @@ namespace YelpDatabaseProject
         }
 
         //selection string builder thats takes in a list of column names and a search string
-        //returns a list of of a list where each each index has items associated with one column
+        //returns a list of a list where each each index has items associated with one column
         public List<List<String>> SQLSELECTExec(string querySTR, List<string> column_names)
         {
             List<List<String>> qResult = new List<List<String>>();
@@ -87,7 +90,7 @@ namespace YelpDatabaseProject
                 while (dataReader.Read())
                 {
                     i = 0;//variable that switches qResult to hold a different column
-                    foreach(string column_name in column_names)
+                    foreach (string column_name in column_names)
                     {
                         //if a new column needs to be added
                         if (qResult.Count <= i)
@@ -105,6 +108,8 @@ namespace YelpDatabaseProject
                 this.CloseConnection();
             }
             return qResult;
-        }
+        } //eo SQLSELECTExec
+
+  
     }
 }

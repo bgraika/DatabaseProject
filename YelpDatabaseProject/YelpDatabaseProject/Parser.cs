@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace JSONParser
+namespace YelpDatabaseProject
 {
     class JSON
     {
@@ -16,7 +16,7 @@ namespace JSONParser
 
         public JSON()
         {
-
+            this.exceptions = new string[] { };
         }
 
         public JSON(string[] exceptions)
@@ -38,7 +38,7 @@ namespace JSONParser
                     JsonTextReader reader = new JsonTextReader(new StringReader(obj));
                     int keyOrValueCounter = 0;
 
-                    file.WriteLine("{");
+                    //file.WriteLine("{");
                     while (reader.Read())
                     {
                         // Exclude certain keys
@@ -135,7 +135,7 @@ namespace JSONParser
                             keyOrValueCounter = 0;
                         }
                     }
-                    file.WriteLine("}");
+                    //file.WriteLine("}");
                 }
             }
         }

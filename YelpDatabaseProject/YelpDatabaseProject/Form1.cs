@@ -13,10 +13,35 @@ namespace YelpDatabaseProject
     public partial class Form1 : Form
     {
         MySQL_connection mydb;
+        JSON json;
+        SQLInserter sqlIns;
+        List<List<Dictionary<string, string>>> businessDicts;
+        List<Dictionary<string, string>> reviewDicts;
+        List<Dictionary<string, string>> userDicts;
         public Form1()
         {
             InitializeComponent();
             mydb = new MySQL_connection();
+            sqlIns = new SQLInserter();
+            businessDicts = new List<List<Dictionary<string, string>>>();
+            reviewDicts = new List<Dictionary<string, string>>();
+            userDicts = new List<Dictionary<string, string>>();
+            string[] ex = new string[]{ "hours", "neighborhoods", "friends", "compliments", "elite" };
+
+            json = new JSON(ex);
+            //json.Convert("yelp_business.json", "Test2.txt");
+            // json.Convert("yelp_review.json", "Text3.txt");
+            //json.Convert("yelp_user.json", "Text4.txt");
+            //businessDicts = sqlIns.JSON_to_Dict_Business("Test2.txt"); //change business table to dictionaries
+            //reviewDicts = sqlIns.JSON_to_Dict_Review("Text3.txt");
+            userDicts = sqlIns.JSON_to_Dict_User("Text4.txt");
+            if (mydb.OpenConnection() == true)
+            {
+            }
+
+            //sqlIns.Dict_to_SQL_Business(businessDicts, mydb.connect);
+            //sqlIns.Dict_to_SQL_Review(reviewDicts,mydb.connect);
+            sqlIns.Dict_to_SQL_User(userDicts, mydb.connect);
         }
 
         //on dropdown all states in the database will appear
